@@ -1,10 +1,10 @@
 {
-  "name": "tictactoe.js",
+  "name": "@sahilsinghrana/tictactoe.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/sahilsinghrana/tictactoe.js.git"
   },
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tic Tac toe ",
   "homepage": "https://github.com/sahilsinghrana/tictactoe.js",
   "main": "dist/index.js",
@@ -22,7 +22,10 @@
   "keywords": [
     "game",
     "tictactoe",
-    "tictactoejs"
+    "tictactoejs",
+    "tictactoe.js",
+    "tic tac toe",
+    "tictactoe-js"
   ],
   "devDependencies": {
     "tsup": "^8.0.2",
