@@ -9,8 +9,9 @@ export default defineConfig((options) => ({
   name: "tictactoe.js",
   sourcemap: false,
   clean: true,
-  target: tsconfig.compilerOptions.target as "es2016",
+  target: "es5",
   minify: true,
   shims: true,
   skipNodeModulesBundle: true,
+  // cjsInterop: true,
 }));

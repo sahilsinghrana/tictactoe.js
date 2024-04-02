@@ -1,12 +1,11 @@
 {
   "compilerOptions": {
-    "strict": false,
+    "strict": true,
     "noImplicitAny": true,
-    "esModuleInterop": true,
     "strictNullChecks": true,
-    "module": "commonjs",
-    "moduleResolution": "Node",
-    "target": "es2019",
+    "module": "ES6",
+    "moduleResolution": "bundler",
+    "target": "ES6",
     "declaration": true,
     "isolatedModules": true,
     "noEmit": true,

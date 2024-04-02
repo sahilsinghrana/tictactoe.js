@@ -1,2 +1,3 @@
-export * from "./lib/TicTacToe";
-export * from "./index,d";
+import TicTacToe from "./lib/TicTacToe";
+
+export default TicTacToe;

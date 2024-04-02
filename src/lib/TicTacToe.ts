@@ -5,7 +5,7 @@ import {
   Player,
   boardT,
   gameStatuses,
-} from "../index,d";
+} from "./types";
 
 class UnplayableError extends Error {
   constructor(message: string) {

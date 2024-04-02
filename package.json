@@ -4,8 +4,8 @@
     "type": "git",
     "url": "https://github.com/sahilsinghrana/tictactoe.js.git"
   },
-  "version": "0.0.2",
-  "description": "Tic Tac toe ",
+  "version": "0.0.3",
+  "description": "Tic Tac toe",
   "homepage": "https://github.com/sahilsinghrana/tictactoe.js",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -19,15 +19,20 @@
   ],
   "author": "sahilsinghrana",
   "license": "MIT",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "keywords": [
     "game",
     "tictactoe",
     "tictactoejs",
     "tictactoe.js",
     "tic tac toe",
-    "tictactoe-js"
+    "tictactoe-js",
+    "sahil singh rana"
   ],
   "devDependencies": {
+    "@swc/core": "^1.4.11",
     "tsup": "^8.0.2",
     "typescript": "^5.4.3"
   }
