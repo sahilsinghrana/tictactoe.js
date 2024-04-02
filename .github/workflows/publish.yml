@@ -20,11 +20,19 @@ jobs:
         run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm run build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: app-build
+          path: dist
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download build artifacts
+          uses: actions/download-artifact@v3
+          with:
+            name: app-build
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v3
         with:
@@ -42,6 +50,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Download build artifacts
+          uses: actions/download-artifact@v3
+          with:
+            name: app-build
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v3
         with:
