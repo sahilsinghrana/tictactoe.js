@@ -30,9 +30,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download build artifacts
-          uses: actions/download-artifact@v3
-          with:
-            name: app-build
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v3
         with:
@@ -51,9 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download build artifacts
-          uses: actions/download-artifact@v3
-          with:
-            name: app-build
+        uses: actions/download-artifact@v3
+        with:
+          name: app-build
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v3
         with:
