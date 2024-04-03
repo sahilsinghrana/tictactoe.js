@@ -1,11 +1,18 @@
 import {
+  DIAGONAL_COORDS,
+  HORIZONTAL_COORDS,
+  VERTICAL_COORDS,
+} from "./constants.js";
+
+import {
   CoordinateArr,
-  Coordinates,
   ErrorTypes,
   Player,
   boardT,
   gameStatuses,
-} from "./types";
+} from "./types.js";
+
+import { checkAllCoordsAreEqual } from "./utils.js";
 
 class UnplayableError extends Error {
   constructor(message: string) {
@@ -20,31 +27,6 @@ class WrongMoveError extends Error {
     this.name = ErrorTypes.WrongMove;
   }
 }
-
-const DIAGONAL_COORDS: CoordinateArr[] = [
-  [
-    [0, 0],
-    [1, 1],
-    [2, 2],
-  ],
-  [
-    [2, 0],
-    [1, 1],
-    [0, 2],
-  ],
-];
-
-const VERTICAL_COORDS: CoordinateArr[] = [
-  Array.from({ length: 3 }).map((_, idx: number): Coordinates => [idx, 0]),
-  Array.from({ length: 3 }).map((_, idx: number): Coordinates => [idx, 1]),
-  Array.from({ length: 3 }).map((_, idx: number): Coordinates => [idx, 2]),
-];
-
-const HORIZONTAL_COORDS: CoordinateArr[] = [
-  Array.from({ length: 3 }).map((_, idx: number): Coordinates => [0, idx]),
-  Array.from({ length: 3 }).map((_, idx: number): Coordinates => [1, idx]),
-  Array.from({ length: 3 }).map((_, idx: number): Coordinates => [2, idx]),
-];
 
 class TicTacToe {
   board: boardT = [
@@ -120,45 +102,7 @@ class TicTacToe {
 
     this.updateNode(x, y);
     this.changePlayer();
-
-    console.log("newB oad", {
-      board: this.board,
-    });
   }
 }
 
 export default TicTacToe;
-
-function checkAllCoordsAreEqual(
-  coordArray: CoordinateArr[],
-  board: boardT
-): CoordinateArr | void {
-  for (let i = 0; i < coordArray.length; i++) {
-    const currentDiag: CoordinateArr = coordArray[i];
-    let val = -1;
-    for (let j = 0; j < currentDiag.length; j++) {
-      const coords = currentDiag[j];
-      const [x, y] = coords;
-
-      const boardVal = board[x][y];
-
-      if (boardVal === Player.NONE) {
-        val = -1;
-        break;
-      }
-
-      if (j === 0) {
-        val = boardVal;
-        continue;
-      }
-
-      if (val !== boardVal) {
-        break;
-      }
-      val = boardVal;
-      if (j === currentDiag.length - 1) {
-        return currentDiag;
-      }
-    }
-  }
-}

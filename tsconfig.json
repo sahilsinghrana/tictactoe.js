@@ -3,13 +3,15 @@
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "module": "ES6",
-    "moduleResolution": "bundler",
-    "target": "ES6",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "target": "ES5",
     "declaration": true,
     "isolatedModules": true,
     "noEmit": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "lib": ["ES2015", "DOM", "ES5"],
+    "esModuleInterop": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]

@@ -41,7 +41,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
       - name: Generate typedocs
-        run: pnpm run typedoc
+        run: pnpm run doc
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
