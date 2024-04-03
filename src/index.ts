@@ -1,3 +1,2 @@
-import TicTacToe from "./lib/TicTacToe";
-
+import { TicTacToe } from "./lib";
 export default TicTacToe;
