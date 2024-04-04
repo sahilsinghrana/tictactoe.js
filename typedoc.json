@@ -3,11 +3,11 @@
   "entryPoints": ["./src/lib/index.ts"],
   "entryPointStrategy": "expand",
   "out": "docs",
-  "tsconfig": "tsconfig.json",
-  "cname": "https://github.com/sahilsinghrana/tictactoe.js",
+  "tsconfig": "./tsconfig.json",
+  "cname": "https://sahilsinghrana.github.io/tictactoe.js",
   "cacheBust": true,
   "searchInComments": true,
-  "titleLink": "https://sahilsinghrana.github.io/tictactoe.js",
+  "titleLink": "https://github.com/sahilsinghrana/tictactoe.js",
   "navigationLinks": {
     "npm": "https://www.npmjs.com/package/@sahilsinghrana/tictactoe.js"
   },

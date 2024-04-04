@@ -31,14 +31,10 @@ const TicTacToe = require("@sahilsinghrana/tictactoe.js");
 const game = new TicTacToe();
 ```
 
-
 ## Examples
 
-[![Svelte](https://img.shields.io/badge/svelte-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white)](https://svelte.dev/) [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)]()
+[![Svelte](https://img.shields.io/badge/svelte-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white)](https://svelte.dev/) [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sahilsinghrana/tictactoeSvelte)
 [![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)](https://sahilsinghrana.github.io/tictactoeSvelte/)
-    
-
-
 
 ## API
 
