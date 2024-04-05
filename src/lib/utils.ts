@@ -1,5 +1,20 @@
 import { CoordinateArr, Player, boardT } from "./types.js";
 
+export const getAvailableMoves = (board: boardT): CoordinateArr => {
+  const availableMoves: CoordinateArr = [];
+
+  for (let i = 0; i < board.length; i++) {
+    const row = board[i];
+    for (let j = 0; j < row.length; j++) {
+      const col = row[j];
+      if (col === -1) {
+        availableMoves.push([i, j]);
+      }
+    }
+  }
+  return availableMoves;
+};
+
 export function checkAllCoordsAreEqual(
   coordArray: CoordinateArr[],
   board: boardT
