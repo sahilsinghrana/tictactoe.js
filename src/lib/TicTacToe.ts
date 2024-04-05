@@ -2,7 +2,7 @@ import {
   DIAGONAL_COORDS,
   HORIZONTAL_COORDS,
   VERTICAL_COORDS,
-} from "./constants.js";
+} from "./constants";
 
 import {
   CoordinateArr,
@@ -10,9 +10,15 @@ import {
   Player,
   boardT,
   gameStatuses,
-} from "./types.js";
+} from "./types";
 
-import { checkAllCoordsAreEqual } from "./utils.js";
+import {
+  checkAllCoordsAreEqual,
+  checkDiagonals,
+  checkHorizontals,
+  checkVerticals,
+  checkWin,
+} from "./utils";
 
 class UnplayableError extends Error {
   constructor(message: string) {
@@ -43,32 +49,8 @@ class TicTacToe {
     this.gameStatus = gameStatuses.ONGOING;
   }
 
-  private checkDiagonals(): CoordinateArr | void {
-    return checkAllCoordsAreEqual(DIAGONAL_COORDS, this.board);
-  }
-
-  private checkHorizontals(): CoordinateArr | void {
-    return checkAllCoordsAreEqual(HORIZONTAL_COORDS, this.board);
-  }
-  private checkVerticals(): CoordinateArr | void {
-    return checkAllCoordsAreEqual(VERTICAL_COORDS, this.board);
-  }
-
-  public checkWin(): CoordinateArr | false {
-    const diagonals = this.checkDiagonals();
-    if (diagonals) return diagonals;
-
-    const verticals = this.checkVerticals();
-    if (verticals) return verticals;
-
-    const horizontals = this.checkHorizontals();
-    if (horizontals) return horizontals;
-
-    return false;
-  }
-
   private changePlayer(): void {
-    const win = this.checkWin();
+    const win = checkWin(this.board);
     if (win) {
       this.winCoordinates = win;
       this.gameStatus = gameStatuses.COMPLETED;

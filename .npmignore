@@ -1,8 +1,21 @@
 /node_modules
 /src
 /docs
+/coverage
 
+/dist/metafile-cjs.json
+/dist/metafile-esm.json
+/dist/metafile-iife.json
+
+.github
 .env
 .DS_Store
+.gitignore
+
+pnpm-lock.yaml
+package-lock.json
+
 tsconfig.json
 tsup.config.ts
+jest.config.ts
+typedoc.json
