@@ -1,8 +1,8 @@
 # TicTacToe.js
 
-[[![Publish Packages](https://github.com/sahilsinghrana/tictactoe.js/actions/workflows/publishPackages.yml/badge.svg?event=release)](https://github.com/sahilsinghrana/tictactoe.js/actions/workflows/publishPackages.yml)](https://github.com/sahilsinghrana/tictactoe.js/actions/workflows/publish.yml)
+[[![Publish Packages](https://github.com/sahilsinghrana/tictactoe.js/actions/workflows/publishPackages.yml/badge.svg?event=release)](https://github.com/sahilsinghrana/tictactoe.js/actions/workflows/publish.yml)
 
-[[![Publish typedocs](https://github.com/sahilsinghrana/tictactoe.js/actions/workflows/publishDocs.yml/badge.svg)](https://github.com/sahilsinghrana/tictactoe.js/actions/workflows/publishDocs.yml)](https://sahilsinghrana.github.io/tictactoe.js)
+[[![Publish typedocs](https://github.com/sahilsinghrana/tictactoe.js/actions/workflows/publishDocs.yml/badge.svg)](https://sahilsinghrana.github.io/tictactoe.js)
 
 ## Table of Contents
 
