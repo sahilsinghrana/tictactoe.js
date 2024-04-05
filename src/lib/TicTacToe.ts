@@ -12,7 +12,7 @@ import {
   gameStatuses,
 } from "./types.js";
 
-import { checkAllCoordsAreEqual } from "./utils.js";
+import { getAvailableMoves, checkAllCoordsAreEqual } from "./utils.js";
 
 class UnplayableError extends Error {
   constructor(message: string) {
@@ -38,6 +38,8 @@ class TicTacToe {
   gameStatus: gameStatuses = gameStatuses.NOT_STARTED;
   winner: Player = Player.NONE;
   winCoordinates: CoordinateArr | undefined;
+  availableMoves: CoordinateArr = getAvailableMoves(this.board);
+
   constructor() {
     this.currentPlayer = Player.PLAYER_A;
     this.gameStatus = gameStatuses.ONGOING;
@@ -54,7 +56,7 @@ class TicTacToe {
     return checkAllCoordsAreEqual(VERTICAL_COORDS, this.board);
   }
 
-  public checkWin(): CoordinateArr | false {
+  private checkWin(): CoordinateArr | false {
     const diagonals = this.checkDiagonals();
     if (diagonals) return diagonals;
 
@@ -67,14 +69,14 @@ class TicTacToe {
     return false;
   }
 
-  private changePlayer(): void {
-    const win = this.checkWin();
-    if (win) {
-      this.winCoordinates = win;
+  private checkGameStatus(): void {
+    this.availableMoves = getAvailableMoves(this.board);
+    if (!this.availableMoves.length) {
       this.gameStatus = gameStatuses.COMPLETED;
-      this.winner = this.currentPlayer;
-      return;
     }
+  }
+
+  private changePlayer(): void {
     if (this.currentPlayer === 0) {
       this.currentPlayer = 1;
     } else {
@@ -84,12 +86,21 @@ class TicTacToe {
 
   private updateNode(x: number, y: number): void {
     const currentValOnNode = this.board[x][y];
-    if (currentValOnNode === Player.NONE) {
-      this.board[x][y] = this.currentPlayer;
+    if (currentValOnNode !== Player.NONE) {
+      throw new WrongMoveError("Already played in that position");
+    }
+
+    this.board[x][y] = this.currentPlayer;
+
+    const win: CoordinateArr | false = this.checkWin();
+    if (win) {
+      this.winCoordinates = win;
+      this.gameStatus = gameStatuses.COMPLETED;
+      this.winner = this.currentPlayer;
       return;
     }
 
-    throw new WrongMoveError("Already played in that position");
+    this.checkGameStatus();
   }
 
   public play(x: number, y: number) {
