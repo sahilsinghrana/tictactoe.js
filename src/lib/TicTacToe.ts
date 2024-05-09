@@ -1,18 +1,8 @@
 import Board from "./Board.js";
-import {
-  DIAGONAL_COORDS,
-  HORIZONTAL_COORDS,
-  VERTICAL_COORDS,
-} from "./constants.js";
-import { gamePredictor } from "./cpuPlayer.js";
 
-import {
-  CoordinateArr,
-  ErrorTypes,
-  Player,
-  boardT,
-  gameStatuses,
-} from "./types.js";
+import { getBestMove } from "./cpuPlayer.js";
+
+import { CoordinateArr, ErrorTypes, Player, gameStatuses } from "./types.js";
 
 import { getAvailableMoves, checkAllCoordsAreEqual } from "./utils.js";
 
@@ -90,8 +80,29 @@ class TicTacToe {
     this.updateNode(x, y);
     this.changePlayer();
     this.moveCount++;
-    if (this.moveCount > 4)
-      console.log(gamePredictor(this.board, this.currentPlayer));
+    if (this.moveCount > 0 && this.gameStatus === gameStatuses.ONGOING) {
+      const predictionTree = getBestMove(
+        this.board,
+        0,
+        [x, y],
+        this.currentPlayer
+      );
+
+      const sortedResults = Object.values(predictionTree?.nextStates)?.sort(
+        (a: Object, b: Object) => {
+          return b.nextStatesScore - a.nextStatesScore;
+        }
+      );
+
+      const bestMove = sortedResults[0];
+      if (bestMove) {
+        const [cpuX, cpuY] = bestMove.move;
+        // const [cpuX, cpuY] = bestMove.move;
+        this.updateNode(cpuX, cpuY);
+        this.changePlayer();
+        this.moveCount++;
+      }
+    }
   }
 }
 
