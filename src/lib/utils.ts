@@ -57,3 +57,9 @@ export function checkAllCoordsAreEqual(
     }
   }
 }
+
+export function getPlayerChar(player: Player): String {
+  if (Player.PLAYER_A === player) return "X";
+  if (Player.PLAYER_B === player) return "O";
+  return "-";
+}

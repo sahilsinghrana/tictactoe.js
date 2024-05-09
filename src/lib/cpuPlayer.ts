@@ -1,10 +1,6 @@
 import Board from "./Board";
 import { CoordinateArr, Coordinates, Player, boardT } from "./types";
 
-const WIN_POINTS = 1;
-const LOSE_POINTS = -1;
-const DRAW_POINTS = 0;
-
 /**
  * Calculates the points of the
  * move based on the depth and the current result of the move
@@ -13,95 +9,129 @@ const DRAW_POINTS = 0;
  * @param depth {number}
  */
 
-function calculatePoints(result: number, depth: number) {
-  return result - depth;
+function calculatePoints(result: number, depth: number, resultOwner: number) {
+  if (result === 1) {
+    if (resultOwner === 1) {
+      return 10 - depth;
+    } else {
+      return depth - 10;
+    }
+  } else {
+    return 0;
+  }
 }
 
 const createResults = (
   move: Coordinates | null,
   result: number,
   depth: number,
-  resultOwner: number
+  resultOwner: number,
+  meta: object
 ) => {
-  return [resultOwner, calculatePoints(result, depth), move, result, depth];
+  return {
+    resultOwner,
+    points: calculatePoints(result, depth, resultOwner),
+    move,
+    result,
+    depth,
+    meta,
+  };
 };
 
-export function gamePredictor(board: Board, player: number) {
+const getStringKeyFromMove = (coordinates) => {
+  return `${coordinates[0]}_${coordinates[1]}`;
+};
+
+const appendMoves = (str, nextMove) => {
+  return `${str}-${getStringKeyFromMove(nextMove)}`;
+};
+
+export function getBestMove(
+  currentBoard: Board,
+  depth: number = 0,
+  currentMove: Coordinates | [] = [],
+  currentPlayer: Player,
+  referenceMoves = getStringKeyFromMove(currentMove)
+) {
   const results: Object = {};
-  console.log("Start Prediction");
+  const playedMoves: Array<Object> = {};
+  const isWin = currentBoard.checkWin();
 
-  function predict(
-    currentBoard: Board,
-    depth: number = 0,
-    currentMove: Coordinates | null,
-    currentPlayer: Player
-  ) {
-    const playedMoves: Array<Object> = [];
-    const isWin = currentBoard.checkWin();
-    if (isWin) {
-      const winningPlayer = isWin[0];
+  if (Array.isArray(isWin)) {
+    const winningPlayer = currentBoard.getPos(currentMove[0], currentMove[1]);
+    const winResult = createResults(currentMove, 1, depth, winningPlayer, {
+      referenceMoves,
+      currentBoard,
+    });
+    results.nextStatesScore = winResult.points;
+    results.currentStateResult = winResult;
 
-      return createResults(currentMove, 1, depth, winningPlayer[0]);
+    return results;
+  }
+
+  const availableMoves = currentBoard.getAvailableMovesFromBoard();
+
+  if (!availableMoves.length) {
+    const drawResult = createResults(currentMove, 0, depth, -1, {
+      referenceMoves,
+      currentBoard,
+    });
+    // addToFinalResult(drawResult);
+    results.nextStatesScore = drawResult.points;
+    results.currentStateResult = drawResult;
+    return results;
+  }
+
+  let nextStatesScore = 0;
+
+  for (let i = 0; i < availableMoves.length; i++) {
+    const move = availableMoves[i];
+    const newBoard: Board = new Board(
+      JSON.parse(JSON.stringify(currentBoard.board))
+    );
+
+    newBoard.update(move[0], move[1], currentPlayer);
+
+    const newDepth = depth + 1;
+    const newPlayer = currentPlayer === 1 ? 0 : 1;
+
+    const predictionsForBoard = getBestMove(
+      newBoard,
+      newDepth,
+      move,
+      newPlayer,
+      appendMoves(referenceMoves, move)
+    );
+
+    playedMoves[getStringKeyFromMove(move)] = {
+      currentPlayer,
+      depth: newDepth,
+      move,
+      previousMove: currentMove,
+      ...predictionsForBoard,
+      currentBoard: newBoard,
+    };
+  }
+
+  const sortedPlayedMoves = Object.values(playedMoves).sort((a, b) => {
+    return a.nextStatesScore - b.nextStatesScore;
+  });
+
+  if (currentPlayer === 0) {
+    if (sortedPlayedMoves[0].nextStatesScore) {
+      nextStatesScore =
+        nextStatesScore + (sortedPlayedMoves[0].nextStatesScore || 0);
     }
-
-    const availableMoves = currentBoard.getAvailableMovesFromBoard();
-    console.log({ availableMoves });
-    if (!availableMoves.length) {
-      return createResults(currentMove, 0, depth, -1);
-    }
-
-    for (let i = 0; i < availableMoves.length; i++) {
-      const move = availableMoves[i];
-      console.log("looping for move", move);
-      const newBoard: Board = new Board(
-        JSON.parse(JSON.stringify(currentBoard.board))
-      );
-
-      console.log("looping for move: newBoard", newBoard);
-      newBoard.update(move[0], move[1], currentPlayer);
-      console.log("looping for move after update: newBoard", newBoard);
-
-      const predictionsForBoard = predict(
-        newBoard,
-        depth + 1,
-        move,
-        currentPlayer === 1 ? 0 : 1
-      );
-      console.log("looping for move: predictionsForBoard", predictionsForBoard);
-      playedMoves.push([
-        {
-          currentPlayer,
-          depth,
-          move,
-          predictionsForBoard,
-          currentMove,
-        },
-      ]);
-    }
-
-    console.log("Pushing into results", playedMoves);
-    if (playedMoves) {
-      if (results[depth]) {
-        results[depth].push({
-          playedMoves,
-          message: "This move generated not result",
-          depth,
-        });
-      } else {
-        results[depth] = [
-          {
-            playedMoves,
-            message: "This move generated not result",
-            depth,
-          },
-        ];
-      }
+  } else {
+    if (sortedPlayedMoves[sortedPlayedMoves.length - 1].nextStatesScore) {
+      nextStatesScore =
+        nextStatesScore +
+        (sortedPlayedMoves[sortedPlayedMoves.length - 1].nextStatesScore || 0);
     }
   }
 
-  console.log("END Prediction", results);
-
-  predict(board, 0, null, player);
+  results.nextStatesScore = nextStatesScore;
+  results.nextStates = playedMoves;
   return results;
 }
 
@@ -111,10 +141,8 @@ export function gamePredictor(board: Board, player: number) {
  * @param board
  * @returns
  */
-export function checkIsCoordWinnable(
-  coordArray: CoordinateArr[],
-  board: boardT
-) {
+export function getWinnableCoords(coordArray: CoordinateArr[], board: boardT) {
+  const winnableCoords = [];
   for (let i = 0; i < coordArray.length; i++) {
     const currentDiag: CoordinateArr = coordArray[i];
 
@@ -139,9 +167,9 @@ export function checkIsCoordWinnable(
 
       val = boardVal;
       if (isLastElement) {
-        return currentDiag;
+        winnableCoords.push(currentDiag);
       }
     }
   }
-  return false;
+  return winnableCoords;
 }

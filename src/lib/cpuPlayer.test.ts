@@ -1,5 +1,5 @@
 import { expect, test, describe } from "vitest";
-import { checkIsCoordWinnable } from "./cpuPlayer";
+import { getWinnableCoords } from "./cpuPlayer";
 import {
   DIAGONAL_COORDS,
   HORIZONTAL_COORDS,
@@ -10,7 +10,7 @@ describe("checkIsCoordWinnable", () => {
   describe("diagonals", () => {
     test("noDiagWinnable", () => {
       expect(
-        checkIsCoordWinnable(DIAGONAL_COORDS, [
+        getWinnableCoords(DIAGONAL_COORDS, [
           [-1, -1, -1],
           [-1, 0, -1],
           [-1, -1, 1],
@@ -19,7 +19,7 @@ describe("checkIsCoordWinnable", () => {
     });
     test("diag1Winnable", () => {
       expect(
-        checkIsCoordWinnable(DIAGONAL_COORDS, [
+        getWinnableCoords(DIAGONAL_COORDS, [
           [-1, -1, 0],
           [-1, -1, -1],
           [1, -1, -1],
@@ -33,7 +33,7 @@ describe("checkIsCoordWinnable", () => {
 
     test("diag2Winnable", () => {
       expect(
-        checkIsCoordWinnable(DIAGONAL_COORDS, [
+        getWinnableCoords(DIAGONAL_COORDS, [
           [-1, -1, 0],
           [-1, 0, -1],
           [0, -1, -1],
@@ -48,7 +48,7 @@ describe("checkIsCoordWinnable", () => {
 
   test("horizontals", () => {
     expect(
-      checkIsCoordWinnable(HORIZONTAL_COORDS, [
+      getWinnableCoords(HORIZONTAL_COORDS, [
         [1, 1, 1],
         [-1, 0, -1],
         [-1, -1, 1],
@@ -59,7 +59,7 @@ describe("checkIsCoordWinnable", () => {
       [0, 2],
     ]);
     expect(
-      checkIsCoordWinnable(HORIZONTAL_COORDS, [
+      getWinnableCoords(HORIZONTAL_COORDS, [
         [-1, -1, -1],
         [-1, 0, -1],
         [-1, -1, 1],
@@ -73,7 +73,7 @@ describe("checkIsCoordWinnable", () => {
 
   test("Verticals", () => {
     expect(
-      checkIsCoordWinnable(VERTICAL_COORDS, [
+      getWinnableCoords(VERTICAL_COORDS, [
         [1, -1, -1],
         [1, 0, -1],
         [1, -1, 1],
