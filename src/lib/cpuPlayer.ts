@@ -38,23 +38,27 @@ const createResults = (
   };
 };
 
-const getStringKeyFromMove = (coordinates) => {
+const getStringKeyFromMove = (coordinates: Coordinates): string => {
   return `${coordinates[0]}_${coordinates[1]}`;
 };
 
-const appendMoves = (str, nextMove) => {
+const appendMoves = (str: String, nextMove: Coordinates) => {
   return `${str}-${getStringKeyFromMove(nextMove)}`;
 };
 
 export function getBestMove(
   currentBoard: Board,
   depth: number = 0,
-  currentMove: Coordinates | [] = [],
+  currentMove: Coordinates,
   currentPlayer: Player,
   referenceMoves = getStringKeyFromMove(currentMove)
 ) {
-  const results: Object = {};
-  const playedMoves: Array<Object> = {};
+  const results: any = {
+    nextStates: [],
+    nextStatesScore: 0,
+    currentStateResult: {},
+  };
+  const playedMoves: any[] = [];
   const isWin = currentBoard.checkWin();
 
   if (Array.isArray(isWin)) {
@@ -85,7 +89,7 @@ export function getBestMove(
   let nextStatesScore = 0;
 
   for (let i = 0; i < availableMoves.length; i++) {
-    const move = availableMoves[i];
+    const move: Coordinates = availableMoves[i];
     const newBoard: Board = new Board(
       JSON.parse(JSON.stringify(currentBoard.board))
     );
@@ -103,19 +107,21 @@ export function getBestMove(
       appendMoves(referenceMoves, move)
     );
 
-    playedMoves[getStringKeyFromMove(move)] = {
+    playedMoves.push({
       currentPlayer,
       depth: newDepth,
       move,
       previousMove: currentMove,
       ...predictionsForBoard,
       currentBoard: newBoard,
-    };
+    });
   }
 
-  const sortedPlayedMoves = Object.values(playedMoves).sort((a, b) => {
-    return a.nextStatesScore - b.nextStatesScore;
-  });
+  const sortedPlayedMoves: any[] = playedMoves.sort(
+    (a: any, b: any): number => {
+      return a.nextStatesScore - b.nextStatesScore;
+    }
+  );
 
   if (currentPlayer === 0) {
     if (sortedPlayedMoves[0].nextStatesScore) {

@@ -88,13 +88,12 @@ class TicTacToe {
         this.currentPlayer
       );
 
-      const sortedResults = Object.values(predictionTree?.nextStates)?.sort(
-        (a: Object, b: Object) => {
+      const sortedResults =
+        predictionTree?.nextStates?.sort((a: any, b: any): number => {
           return b.nextStatesScore - a.nextStatesScore;
-        }
-      );
+        }) || [];
 
-      const bestMove = sortedResults[0];
+      const bestMove: any = sortedResults[0];
       if (bestMove) {
         const [cpuX, cpuY] = bestMove.move;
         // const [cpuX, cpuY] = bestMove.move;

@@ -16,7 +16,7 @@ export default defineConfig((options) => {
     skipNodeModulesBundle: true,
     cjsInterop: false,
     platform: "neutral",
-    treeshake: true,
+    treeshake: false,
     tsconfig: "./tsconfig.json",
   };
 });
