@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/sahilsinghrana/tictactoe.js.git"
   },
-  "version": "0.1.1",
+  "version": "1.0.0-beta",
   "description": "Tic Tac toe",
   "homepage": "https://github.com/sahilsinghrana/tictactoe.js",
   "main": "./dist/index.js",
@@ -20,7 +20,8 @@
   "scripts": {
     "doc": "typedoc",
     "dev": "tsup --watch",
-    "build": "tsup"
+    "build": "tsup",
+    "test": "vitest"
   },
   "files": [
     "/dist"
@@ -41,6 +42,7 @@
     "terser": "^5.30.2",
     "tsup": "^8.0.2",
     "typedoc": "^0.25.12",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "vitest": "^1.6.0"
   }
 }

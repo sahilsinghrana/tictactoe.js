@@ -15,12 +15,21 @@ export const getAvailableMoves = (board: boardT): CoordinateArr => {
   return availableMoves;
 };
 
+export function checkIfCoordIsWinnable() {}
+
+/**
+ *
+ * @param coordArray
+ * @param board
+ * @returns
+ */
 export function checkAllCoordsAreEqual(
   coordArray: CoordinateArr[],
   board: boardT
 ): CoordinateArr | void {
   for (let i = 0; i < coordArray.length; i++) {
     const currentDiag: CoordinateArr = coordArray[i];
+
     let val = -1;
     for (let j = 0; j < currentDiag.length; j++) {
       const coords = currentDiag[j];
@@ -47,4 +56,10 @@ export function checkAllCoordsAreEqual(
       }
     }
   }
+}
+
+export function getPlayerChar(player: Player): String {
+  if (Player.PLAYER_A === player) return "X";
+  if (Player.PLAYER_B === player) return "O";
+  return "-";
 }
