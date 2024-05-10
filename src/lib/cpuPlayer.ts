@@ -43,6 +43,8 @@ const getStringKeyFromMove = (coordinates: Coordinates): string => {
 };
 
 const appendMoves = (str: String, nextMove: Coordinates) => {
+  return `${str}-${getStringKeyFromMove(nextMove)}`;
+};
 
 export function getBestMove(
   currentBoard: Board,
@@ -88,7 +90,6 @@ export function getBestMove(
   let nextStatesScore = 0;
 
   for (let i = 0; i < availableMoves.length; i++) {
-
     const move: Coordinates = availableMoves[i];
 
     const newBoard: Board = new Board(
@@ -107,7 +108,6 @@ export function getBestMove(
       newPlayer,
       appendMoves(referenceMoves, move)
     );
-
 
     playedMoves.push({
       currentPlayer,
