@@ -43,8 +43,6 @@ const getStringKeyFromMove = (coordinates: Coordinates): string => {
 };
 
 const appendMoves = (str: String, nextMove: Coordinates) => {
-  return `${str}-${getStringKeyFromMove(nextMove)}`;
-};
 
 export function getBestMove(
   currentBoard: Board,
@@ -59,6 +57,7 @@ export function getBestMove(
     currentStateResult: {},
   };
   const playedMoves: any[] = [];
+
   const isWin = currentBoard.checkWin();
 
   if (Array.isArray(isWin)) {
@@ -89,7 +88,9 @@ export function getBestMove(
   let nextStatesScore = 0;
 
   for (let i = 0; i < availableMoves.length; i++) {
+
     const move: Coordinates = availableMoves[i];
+
     const newBoard: Board = new Board(
       JSON.parse(JSON.stringify(currentBoard.board))
     );
@@ -106,6 +107,7 @@ export function getBestMove(
       newPlayer,
       appendMoves(referenceMoves, move)
     );
+
 
     playedMoves.push({
       currentPlayer,

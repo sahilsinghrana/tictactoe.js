@@ -4,6 +4,7 @@ import {
   HORIZONTAL_COORDS,
   VERTICAL_COORDS,
 } from "./constants";
+
 import {
   Coordinate,
   CoordinateArr,
@@ -11,6 +12,7 @@ import {
   boardT,
   gameStatuses,
 } from "./types";
+
 import { checkAllCoordsAreEqual, getAvailableMoves } from "./utils";
 
 class Board {
@@ -31,6 +33,7 @@ class Board {
   update(x: number, y: number, player: Player) {
     this.board[x][y] = player;
   }
+
 
   getPos(x: Coordinate, y: Coordinate) {
     return this.board[x][y];

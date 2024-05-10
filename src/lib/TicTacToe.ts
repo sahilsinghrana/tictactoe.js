@@ -94,6 +94,7 @@ class TicTacToe {
         }) || [];
 
       const bestMove: any = sortedResults[0];
+
       if (bestMove) {
         const [cpuX, cpuY] = bestMove.move;
         // const [cpuX, cpuY] = bestMove.move;
