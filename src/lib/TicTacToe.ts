@@ -1,8 +1,16 @@
-import Board from "./Board.js";
+import {
+  DIAGONAL_COORDS,
+  HORIZONTAL_COORDS,
+  VERTICAL_COORDS,
+} from "./constants.js";
 
-import { getBestMove } from "./cpuPlayer.js";
-
-import { CoordinateArr, ErrorTypes, Player, gameStatuses } from "./types.js";
+import {
+  CoordinateArr,
+  ErrorTypes,
+  Player,
+  boardT,
+  gameStatuses,
+} from "./types.js";
 
 import { getAvailableMoves, checkAllCoordsAreEqual } from "./utils.js";
 
@@ -21,22 +29,48 @@ class WrongMoveError extends Error {
 }
 
 class TicTacToe {
-  board = new Board(null);
+  board: boardT = [
+    [-1, -1, -1],
+    [-1, -1, -1],
+    [-1, -1, -1],
+  ];
   currentPlayer: Player;
   gameStatus: gameStatuses = gameStatuses.NOT_STARTED;
   winner: Player = Player.NONE;
   winCoordinates: CoordinateArr | undefined;
-  availableMoves: CoordinateArr = this.board.getAvailableMovesFromBoard();
-  moveCount: number = 0;
+  availableMoves: CoordinateArr = getAvailableMoves(this.board);
 
   constructor() {
     this.currentPlayer = Player.PLAYER_A;
     this.gameStatus = gameStatuses.ONGOING;
-    console.log("sdLInked COnstructir");
+  }
+
+  private checkDiagonals(): CoordinateArr | void {
+    return checkAllCoordsAreEqual(DIAGONAL_COORDS, this.board);
+  }
+
+  private checkHorizontals(): CoordinateArr | void {
+    return checkAllCoordsAreEqual(HORIZONTAL_COORDS, this.board);
+  }
+  private checkVerticals(): CoordinateArr | void {
+    return checkAllCoordsAreEqual(VERTICAL_COORDS, this.board);
+  }
+
+  private checkWin(): CoordinateArr | false {
+    const diagonals = this.checkDiagonals();
+    if (diagonals) return diagonals;
+
+    const verticals = this.checkVerticals();
+    if (verticals) return verticals;
+
+    const horizontals = this.checkHorizontals();
+    if (horizontals) return horizontals;
+
+    return false;
   }
 
   private checkGameStatus(): void {
-    this.availableMoves = this.board.getAvailableMovesFromBoard();
+    this.availableMoves = getAvailableMoves(this.board);
     if (!this.availableMoves.length) {
       this.gameStatus = gameStatuses.COMPLETED;
     }
@@ -51,14 +85,14 @@ class TicTacToe {
   }
 
   private updateNode(x: number, y: number): void {
-    const currentValOnNode = this.board.getPos(x, y);
+    const currentValOnNode = this.board[x][y];
     if (currentValOnNode !== Player.NONE) {
       throw new WrongMoveError("Already played in that position");
     }
 
-    this.board.update(x, y, this.currentPlayer);
+    this.board[x][y] = this.currentPlayer;
 
-    const win: CoordinateArr | false = this.board.checkWin();
+    const win: CoordinateArr | false = this.checkWin();
     if (win) {
       this.winCoordinates = win;
       this.gameStatus = gameStatuses.COMPLETED;
@@ -79,30 +113,6 @@ class TicTacToe {
 
     this.updateNode(x, y);
     this.changePlayer();
-    this.moveCount++;
-    if (this.moveCount > 0 && this.gameStatus === gameStatuses.ONGOING) {
-      const predictionTree = getBestMove(
-        this.board,
-        0,
-        [x, y],
-        this.currentPlayer
-      );
-
-      const sortedResults = Object.values(predictionTree?.nextStates)?.sort(
-        (a: Object, b: Object) => {
-          return b.nextStatesScore - a.nextStatesScore;
-        }
-      );
-
-      const bestMove = sortedResults[0];
-      if (bestMove) {
-        const [cpuX, cpuY] = bestMove.move;
-        // const [cpuX, cpuY] = bestMove.move;
-        this.updateNode(cpuX, cpuY);
-        this.changePlayer();
-        this.moveCount++;
-      }
-    }
   }
 }
 
