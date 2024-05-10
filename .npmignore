@@ -7,7 +7,7 @@
 /dist/metafile-iife.json
 
 /.github
-
+.git-old
 .env
 .DS_Store
 .gitignore
