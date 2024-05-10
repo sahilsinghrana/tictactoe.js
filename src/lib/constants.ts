@@ -1,12 +1,6 @@
 import TicTac from "./TicTacToe";
 
-import { CoordinateArr, Coordinates, boardT } from "./types";
-
-export const getDefaultBoard = (): boardT => [
-  [-1, -1, -1],
-  [-1, -1, -1],
-  [-1, -1, -1],
-];
+import { CoordinateArr, Coordinates } from "./types";
 
 export const DIAGONAL_COORDS: CoordinateArr[] = [
   [
