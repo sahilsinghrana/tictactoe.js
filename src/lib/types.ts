@@ -1,11 +1,3 @@
-import TicTacToe from "./TicTacToe";
-
-declare global {
-  interface Window {
-    TicTacToe: typeof TicTacToe;
-  }
-}
-
 export enum ErrorTypes {
   Unplayable = "Unplayable",
   WrongMove = "WrongMove",
