@@ -4,8 +4,6 @@ import { getBestMove } from "./cpuPlayer.js";
 
 import { CoordinateArr, ErrorTypes, Player, gameStatuses } from "./types.js";
 
-import { getAvailableMoves, checkAllCoordsAreEqual } from "./utils.js";
-
 class UnplayableError extends Error {
   constructor(message: string) {
     super(message);
@@ -88,19 +86,21 @@ class TicTacToe {
         this.currentPlayer
       );
 
-      const sortedResults =
-        predictionTree?.nextStates?.sort((a: any, b: any): number => {
-          return b.nextStatesScore - a.nextStatesScore;
-        }) || [];
+      if (Array.isArray(predictionTree?.nextStates)) {
+        const sortedResults = predictionTree?.nextStates?.sort(
+          (a: any, b: any): number => {
+            return b.nextStatesScore - a.nextStatesScore;
+          }
+        );
 
-      const bestMove: any = sortedResults[0];
+        const bestMove: any = sortedResults[0];
 
-      if (bestMove) {
-        const [cpuX, cpuY] = bestMove.move;
-        // const [cpuX, cpuY] = bestMove.move;
-        this.updateNode(cpuX, cpuY);
-        this.changePlayer();
-        this.moveCount++;
+        if (bestMove) {
+          const [cpuX, cpuY] = bestMove.move;
+          this.updateNode(cpuX, cpuY);
+          this.changePlayer();
+          this.moveCount++;
+        }
       }
     }
   }

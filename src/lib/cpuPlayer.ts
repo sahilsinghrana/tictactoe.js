@@ -1,15 +1,11 @@
 import Board from "./Board";
 import { CoordinateArr, Coordinates, Player, boardT } from "./types";
 
-/**
- * Calculates the points of the
- * move based on the depth and the current result of the move
- *
- * @param result {number}
- * @param depth {number}
- */
-
-function calculatePoints(result: number, depth: number, resultOwner: number) {
+function calculatePoints(
+  result: number,
+  depth: number,
+  resultOwner: number
+): number {
   if (result === 1) {
     if (resultOwner === 1) {
       return 10 - depth;
@@ -21,20 +17,26 @@ function calculatePoints(result: number, depth: number, resultOwner: number) {
   }
 }
 
+interface IbestMoveResult {
+  resultOwner: Player;
+  points: number;
+  move: Coordinates;
+  result: number;
+  depth: number;
+}
+
 const createResults = (
-  move: Coordinates | null,
+  move: Coordinates,
   result: number,
   depth: number,
-  resultOwner: number,
-  meta: object
-) => {
+  resultOwner: number
+): IbestMoveResult => {
   return {
     resultOwner,
     points: calculatePoints(result, depth, resultOwner),
     move,
     result,
     depth,
-    meta,
   };
 };
 
@@ -50,38 +52,34 @@ export function getBestMove(
   currentBoard: Board,
   depth: number = 0,
   currentMove: Coordinates,
-  currentPlayer: Player,
-  referenceMoves = getStringKeyFromMove(currentMove)
+  currentPlayer: Player
 ) {
-  const results: any = {
+  const results: {
+    nextStates: object;
+    nextStatesScore: number;
+    currentStateResult: IbestMoveResult | {};
+  } = {
     nextStates: [],
     nextStatesScore: 0,
     currentStateResult: {},
   };
+
   const playedMoves: any[] = [];
 
   const isWin = currentBoard.checkWin();
 
   if (Array.isArray(isWin)) {
     const winningPlayer = currentBoard.getPos(currentMove[0], currentMove[1]);
-    const winResult = createResults(currentMove, 1, depth, winningPlayer, {
-      referenceMoves,
-      currentBoard,
-    });
+    const winResult = createResults(currentMove, 1, depth, winningPlayer);
     results.nextStatesScore = winResult.points;
     results.currentStateResult = winResult;
-
     return results;
   }
 
   const availableMoves = currentBoard.getAvailableMovesFromBoard();
 
   if (!availableMoves.length) {
-    const drawResult = createResults(currentMove, 0, depth, -1, {
-      referenceMoves,
-      currentBoard,
-    });
-    // addToFinalResult(drawResult);
+    const drawResult = createResults(currentMove, 0, depth, -1);
     results.nextStatesScore = drawResult.points;
     results.currentStateResult = drawResult;
     return results;
@@ -105,8 +103,7 @@ export function getBestMove(
       newBoard,
       newDepth,
       move,
-      newPlayer,
-      appendMoves(referenceMoves, move)
+      newPlayer
     );
 
     playedMoves.push({
@@ -115,7 +112,6 @@ export function getBestMove(
       move,
       previousMove: currentMove,
       ...predictionsForBoard,
-      currentBoard: newBoard,
     });
   }
 
