@@ -24,17 +24,28 @@ npm install @sahilsinghrana/tictactoe.js
 import TicTacToe from "@sahilsinghrana/tictactoe.js";
 
 const game = new TicTacToe();
+
+game.board.board; // Board Array
+
+game.play(x, y); // plays a move for user
 ```
 
 ```javascript
 const TicTacToe = require("@sahilsinghrana/tictactoe.js");
 const game = new TicTacToe();
+
+game.board.board; // Board Array
+
+game.play(x, y); // plays a move for user
 ```
 
 ## Examples
 
-[![Svelte](https://img.shields.io/badge/svelte-%23f1413d.svg?style=for-the-badge&logo=svelte&logoColor=white)](https://svelte.dev/) [![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sahilsinghrana/tictactoeSvelte)
-[![Github Pages](https://img.shields.io/badge/github%20pages-121013?style=for-the-badge&logo=github&logoColor=white)](https://sahilsinghrana.github.io/tictactoeSvelte/)
+[VanillaJs Example](https://sahilsinghrana.github.io/tictactoeSvelte/)[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://sahilsinghrana.github.io/tictactoevanilla/)
+
+[Svelte Example](https://sahilsinghrana.github.io/tictactoeSvelte/)[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sahilsinghrana/tictactoevanilla)
+
+[ReactJs Example](https://sahilsinghrana.github.io/TicTacToeReact/)[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sahilsinghrana/TicTacToeReact)
 
 ## API
 
