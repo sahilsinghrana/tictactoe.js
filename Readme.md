@@ -41,9 +41,9 @@ game.play(x, y); // plays a move for user
 
 ## Examples
 
-[VanillaJs Example](https://sahilsinghrana.github.io/tictactoeSvelte/)[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://sahilsinghrana.github.io/tictactoevanilla/)
+[VanillaJs Example](https://sahilsinghrana.github.io/tictactoevanilla/)[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://sahilsinghrana.github.io/tictactoevanilla/)
 
-[Svelte Example](https://sahilsinghrana.github.io/tictactoeSvelte/)[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sahilsinghrana/tictactoevanilla)
+[Svelte Example](https://sahilsinghrana.github.io/tictactoeSvelte/)[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sahilsinghrana/tictactoeSvelte)
 
 [ReactJs Example](https://sahilsinghrana.github.io/TicTacToeReact/)[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/sahilsinghrana/TicTacToeReact)
 
